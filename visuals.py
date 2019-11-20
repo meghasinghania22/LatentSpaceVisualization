@@ -45,6 +45,7 @@ def computeTSNEProjectionOfLatentSpace(X, encoder, display=True):
     # Compute latent space representation
     print("Computing latent space projection...")
     X_encoded = encoder.predict(X)
+    print(X_encoded.shape)
 
     # Compute t-SNE embedding of latent space
     print("Computing t-SNE embedding...")

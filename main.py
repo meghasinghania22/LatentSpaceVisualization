@@ -55,8 +55,8 @@ def trainModel(startEpoch=0):
     nbBatch = int(X_train.shape[0]/batchSize)
 
     # Train the Autoencoder on dataset
-    print "Training Autoencoder for {} epochs with {} batches per epoch and {} samples per batch.".format(nbEpoch,nbBatch,batchSize)
-    print "Run id: {}".format(runID)
+    print("Training Autoencoder for {} epochs with {} batches per epoch and {} samples per batch.".format(nbEpoch,nbBatch,batchSize))
+    print("Run id: {}".format(runID))
 
     # Debug utils writer 
     writer = tf.train.SummaryWriter("/tmp/logs/"+runID)
@@ -88,9 +88,9 @@ def trainModel(startEpoch=0):
                 validationLoss = autoencoder.evaluate(X_test[:512], X_test[:512], batch_size=256, verbose=0)
                 validationSummary = tf.Summary.Value(tag="Validation Loss", simple_value=float(validationLoss))
                 summary = tf.Summary(value=[trainingSummary,validationSummary])
-                print "Epoch {}/{} - Batch {}/{} - Loss: {:.3f}/{:.3f} - ETA:".format(epoch+1,nbEpoch,batchIndex+1,nbBatch,autoencoderLoss,validationLoss), eta
+                print("Epoch {}/{} - Batch {}/{} - Loss: {:.3f}/{:.3f} - ETA:".format(epoch+1,nbEpoch,batchIndex+1,nbBatch,autoencoderLoss,validationLoss), eta)
             else:
-                print "Epoch {}/{} - Batch {}/{} - Loss: {:.3f} - ETA:".format(epoch+1,nbEpoch,batchIndex+1,nbBatch,autoencoderLoss), eta
+                print("Epoch {}/{} - Batch {}/{} - Loss: {:.3f} - ETA:".format(epoch+1,nbEpoch,batchIndex+1,nbBatch,autoencoderLoss), eta)
                 summary = tf.Summary(value=[trainingSummary,])
             writer.add_summary(summary, epoch*nbBatch + batchIndex)
 
@@ -114,21 +114,21 @@ def testModel():
 
     # Visualization functions
     #visualizeReconstructedImages(X_train[:16],X_test[:16], autoencoder)
-    #computeTSNEProjectionOfPixelSpace(X_test[:1000], display=True)
-    #computeTSNEProjectionOfLatentSpace(X_test[:1000], encoder, display=True)
-    while 1: visualizeInterpolation(X_test[randint(0,X_test.shape[0])], X_test[randint(0,X_test.shape[0])], encoder, decoder, save=False, nbSteps=5)
-    #while 1 :visualizeArithmetics(X_test[randint(0,X_test.shape[0])], X_test[randint(0,X_test.shape[0])], X_test[randint(0,X_test.shape[0])], encoder, decoder)
+    # computeTSNEProjectionOfPixelSpace(X_test[:1000], display=True)
+    # computeTSNEProjectionOfLatentSpace(X_test[:1000], encoder, display=True)
+    # while 1: visualizeInterpolation(X_test[randint(0,X_test.shape[0])], X_test[randint(0,X_test.shape[0])], encoder, decoder, save=False, nbSteps=5)
+    while 1 :visualizeArithmetics(X_test[randint(0,X_test.shape[0])], X_test[randint(0,X_test.shape[0])], X_test[randint(0,X_test.shape[0])], encoder, decoder)
 
 if __name__ == "__main__":
     arg = sys.argv[1] if len(sys.argv) == 2 else None 
     if arg is None:
-        print "Need argument"
+        print("Need argument")
     elif arg == "train":
         trainModel(startEpoch=0)
     elif arg == "test":
         testModel()
     else:
-        print "Wrong argument"
+        print("Wrong argument")
 
 
 
